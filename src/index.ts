@@ -12,10 +12,14 @@ async function run(): Promise<void> {
     const stepNumber = '';
 
     if (!runID || !runAttempt || !jobName || !stepName) {
-      throw new Error('Missing required GitHub context: GITHUB_RUN_ID, GITHUB_RUN_ATTEMPT, GITHUB_JOB, GITHUB_ACTION');
+      throw new Error(
+        'Missing required GitHub context: GITHUB_RUN_ID, GITHUB_RUN_ATTEMPT, GITHUB_JOB, GITHUB_ACTION'
+      );
     }
 
-    core.debug(`Context - runID: ${runID}, runAttempt: ${runAttempt}, jobName: ${jobName}, stepName: ${stepName}, stepNumber: ${stepNumber}`);
+    core.debug(
+      `Context - runID: ${runID}, runAttempt: ${runAttempt}, jobName: ${jobName}, stepName: ${stepName}, stepNumber: ${stepNumber}`
+    );
 
     const traceID = generateTraceID(runID, runAttempt);
     const spanID = generateSpanID(runID, runAttempt, jobName, stepName, stepNumber);

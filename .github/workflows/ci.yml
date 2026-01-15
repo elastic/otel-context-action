@@ -64,4 +64,32 @@ jobs:
         run: test -n "${{ steps.otel-context.outputs.traceparent }}"
 
       - name: Assert TRACEPARENT env is not empty
-        run: test -n "${{ env.TRACEPARENT }}"
+        run: test -n "${TRACEPARENT}"
+
+  test-e2e:
+    name: Test action e2e
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v6
+
+      - name: Run action
+        id: otel-context
+        uses: ./
+
+      - name: install otel-cli
+        run: go install github.com/equinix-labs/otel-cli@latest
+
+      - name: run otel-cli
+        run: |
+          $(go env GOPATH)/bin/otel-cli exec \
+            --service my-service \
+            --name "curl google" \
+            curl https://google.com
+        env:
+          OTEL_EXPORTER_OTLP_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
+          OTEL_EXPORTER_OTLP_HEADERS: ${{ secrets.OTEL_HEADER }}
+          TRACEPARENT: ${{ steps.otel-context.outputs.traceparent }}

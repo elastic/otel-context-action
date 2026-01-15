@@ -11,9 +11,9 @@ async function run(): Promise<void> {
     const stepName = '';
     const stepNumber = '';
 
-    if (!runID || !runAttempt || !jobName || !stepName) {
+    if (!runID || !runAttempt || !jobName) {
       throw new Error(
-        'Missing required GitHub context: GITHUB_RUN_ID, GITHUB_RUN_ATTEMPT, GITHUB_JOB, GITHUB_ACTION'
+        'Missing required GitHub context: GITHUB_RUN_ID, GITHUB_RUN_ATTEMPT, GITHUB_JOB'
       );
     }
 

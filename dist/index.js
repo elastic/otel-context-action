@@ -25776,8 +25776,8 @@ async function run() {
         // TODO: Consider using step name and number if available in future GitHub context
         const stepName = '';
         const stepNumber = '';
-        if (!runID || !runAttempt || !jobName || !stepName) {
-            throw new Error('Missing required GitHub context: GITHUB_RUN_ID, GITHUB_RUN_ATTEMPT, GITHUB_JOB, GITHUB_ACTION');
+        if (!runID || !runAttempt || !jobName) {
+            throw new Error('Missing required GitHub context: GITHUB_RUN_ID, GITHUB_RUN_ATTEMPT, GITHUB_JOB');
         }
         core.debug(`Context - runID: ${runID}, runAttempt: ${runAttempt}, jobName: ${jobName}, stepName: ${stepName}, stepNumber: ${stepNumber}`);
         const traceID = (0, generate_1.generateTraceID)(runID, runAttempt);

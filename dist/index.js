@@ -25767,7 +25767,7 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(7484));
 const generate_1 = __nccwpck_require__(3516);
-async function run() {
+function run() {
     try {
         // Detect parameters from GitHub context environment variables
         const runID = process.env.GITHUB_RUN_ID || '';
@@ -25804,7 +25804,7 @@ async function run() {
         }
     }
 }
-run();
+void run();
 
 
 /***/ }),

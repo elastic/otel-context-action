@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 import { generateTraceID, generateSpanID, generateTraceparent } from './generate';
 
-async function run(): Promise<void> {
+function run(): void {
   try {
     // Detect parameters from GitHub context environment variables
     const runID = process.env.GITHUB_RUN_ID || '';
@@ -47,4 +47,4 @@ async function run(): Promise<void> {
   }
 }
 
-run();
+void run();

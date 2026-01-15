@@ -20,7 +20,7 @@ export function generateSpanID(
   runAttempt: string,
   jobName: string,
   stepName: string,
-  stepNumber: string = ''
+  stepNumber = ''
 ): string {
   let input: string;
   if (stepNumber && parseInt(stepNumber) > 0) {
@@ -42,7 +42,7 @@ export function generateSpanID(
 export function generateTraceparent(
   traceID: string,
   spanID: string,
-  sampled: boolean = true
+  sampled = true
 ): string {
   const version = '00';
   const traceFlags = sampled ? '01' : '00';

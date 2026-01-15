@@ -11,7 +11,7 @@ Automatically detects GitHub context and sets `TRACE_ID`, `SPAN_ID` and `TRACEPA
 
 ```yaml
 - name: Generate OTel IDs
-  uses: elastic/elastic-otel-wrapper-action@v1
+  uses: elastic/otel-context-action@v1
 
 - name: Use the IDs
   run: |
@@ -25,7 +25,7 @@ Automatically detects GitHub context and sets `TRACE_ID`, `SPAN_ID` and `TRACEPA
 ```yaml
 - name: Generate OTel IDs
   id: otel
-  uses: elastic/elastic-otel-wrapper-action@v1
+  uses: elastic/otel-context-action@v1
 
 - name: Access via outputs
   run: |
@@ -64,6 +64,37 @@ These are automatically set for use in subsequent steps:
 **Span ID**: SHA-256 hash of `{runID}{runAttempt}{jobName}{stepName}{stepNumber?}`, characters 16-32
 
 Based on the [OTel GitHub Actions receiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/receiver/githubactionsreceiver/trace_event_handling.go) implementation.
+
+## Examples
+
+Let's use https://github.com/equinix-labs/otel-cli to illustrate how to create the
+distributed context propagation
+
+```yaml
+jobs:
+  otel-cli:
+    permissions:
+      contents: read
+
+    steps:
+      - name: install otel-cli
+        run: go install github.com/equinix-labs/otel-cli@latest
+
+      - name: otel-context
+        id: otel
+        uses: elastic/otel-context-action@v1
+
+      - name: run otel-cli
+        run: |
+          otel-cli exec \
+            --service my-service \
+            --name "curl google" \
+            curl https://google.com
+        env:
+          OTEL_EXPORTER_OTLP_ENDPOINT: ${{ secrets.ELASTIC_OTEL_ENDPOINT }}
+          OTEL_EXPORTER_OTLP_HEADERS: "Authorization=Bearer ${{ secrets.ELASTIC_OTEL_TOKEN }}"
+          TRACEPARENT: ${{ steps.otel.outputs.traceparent }} # TRACEPARENT env variable is already
+```
 
 ## Tasks
 

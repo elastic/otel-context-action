@@ -31,7 +31,7 @@ describe('generateTraceID', () => {
     const runAttempt = '1';
     const input = `${runID}${runAttempt}t`;
     const expectedHash = crypto.createHash('sha256').update(input).digest('hex').substring(0, 32);
-    
+
     const traceID = generateTraceID(runID, runAttempt);
     expect(traceID).toBe(expectedHash);
   });
@@ -87,7 +87,7 @@ describe('generateSpanID', () => {
     const stepName = 'test';
     const input = `${runID}${runAttempt}${jobName}${stepName}`;
     const expectedHash = crypto.createHash('sha256').update(input).digest('hex').substring(16, 32);
-    
+
     const spanID = generateSpanID(runID, runAttempt, jobName, stepName);
     expect(spanID).toBe(expectedHash);
   });
@@ -100,7 +100,7 @@ describe('generateSpanID', () => {
     const stepNumber = '5';
     const input = `${runID}${runAttempt}${jobName}${stepName}${stepNumber}`;
     const expectedHash = crypto.createHash('sha256').update(input).digest('hex').substring(16, 32);
-    
+
     const spanID = generateSpanID(runID, runAttempt, jobName, stepName, stepNumber);
     expect(spanID).toBe(expectedHash);
   });
@@ -127,7 +127,7 @@ describe('generateTraceparent', () => {
     const traceID = '0af7651916cd43dd8448eb211c80319c';
     const spanID = 'b9c7c989f97918e1';
     const traceparent = generateTraceparent(traceID, spanID);
-    
+
     expect(traceparent).toBe('00-0af7651916cd43dd8448eb211c80319c-b9c7c989f97918e1-01');
   });
 
@@ -135,7 +135,7 @@ describe('generateTraceparent', () => {
     const traceID = generateTraceID('12345', '1');
     const spanID = generateSpanID('12345', '1', 'build', 'test');
     const traceparent = generateTraceparent(traceID, spanID);
-    
+
     const parts = traceparent.split('-');
     expect(parts).toHaveLength(4);
     expect(parts[0]).toBe('00'); // version
@@ -150,31 +150,36 @@ describe('generateTraceparent', () => {
   });
 
   it('should set sampled flag to 01 when sampled=true', () => {
-    const traceparent = generateTraceparent('0af7651916cd43dd8448eb211c80319c', 'b9c7c989f97918e1', true);
+    const traceparent = generateTraceparent(
+      '0af7651916cd43dd8448eb211c80319c',
+      'b9c7c989f97918e1',
+      true
+    );
     expect(traceparent).toMatch(/-01$/);
   });
 
   it('should set sampled flag to 00 when sampled=false', () => {
-    const traceparent = generateTraceparent('0af7651916cd43dd8448eb211c80319c', 'b9c7c989f97918e1', false);
+    const traceparent = generateTraceparent(
+      '0af7651916cd43dd8448eb211c80319c',
+      'b9c7c989f97918e1',
+      false
+    );
     expect(traceparent).toMatch(/-00$/);
   });
 
   it('should generate consistent traceparent for same inputs', () => {
     const traceID = generateTraceID('12345', '1');
     const spanID = generateSpanID('12345', '1', 'build', 'test');
-    
+
     const traceparent1 = generateTraceparent(traceID, spanID);
     const traceparent2 = generateTraceparent(traceID, spanID);
-    
+
     expect(traceparent1).toBe(traceparent2);
   });
 
   it('should match W3C spec format regex', () => {
-    const traceparent = generateTraceparent(
-      '0af7651916cd43dd8448eb211c80319c',
-      'b9c7c989f97918e1'
-    );
-    
+    const traceparent = generateTraceparent('0af7651916cd43dd8448eb211c80319c', 'b9c7c989f97918e1');
+
     // W3C Trace Context regex pattern
     const w3cPattern = /^00-[0-9a-f]{32}-[0-9a-f]{16}-[0-9a-f]{2}$/;
     expect(traceparent).toMatch(w3cPattern);

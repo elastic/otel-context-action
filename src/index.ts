@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 import { generateTraceID, generateSpanID, generateTraceparent } from './generate';
 
-async function run(): Promise<void> {
+function run(): void {
   try {
     // Detect parameters from GitHub context environment variables
     const runID = process.env.GITHUB_RUN_ID || '';
@@ -11,11 +11,15 @@ async function run(): Promise<void> {
     const stepName = '';
     const stepNumber = '';
 
-    if (!runID || !runAttempt || !jobName || !stepName) {
-      throw new Error('Missing required GitHub context: GITHUB_RUN_ID, GITHUB_RUN_ATTEMPT, GITHUB_JOB, GITHUB_ACTION');
+    if (!runID || !runAttempt || !jobName) {
+      throw new Error(
+        'Missing required GitHub context: GITHUB_RUN_ID, GITHUB_RUN_ATTEMPT, GITHUB_JOB'
+      );
     }
 
-    core.debug(`Context - runID: ${runID}, runAttempt: ${runAttempt}, jobName: ${jobName}, stepName: ${stepName}, stepNumber: ${stepNumber}`);
+    core.debug(
+      `Context - runID: ${runID}, runAttempt: ${runAttempt}, jobName: ${jobName}, stepName: ${stepName}, stepNumber: ${stepNumber}`
+    );
 
     const traceID = generateTraceID(runID, runAttempt);
     const spanID = generateSpanID(runID, runAttempt, jobName, stepName, stepNumber);
@@ -43,4 +47,4 @@ async function run(): Promise<void> {
   }
 }
 
-run();
+void run();

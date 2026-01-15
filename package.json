@@ -4,16 +4,15 @@
   "description": "Generates OpenTelemetry trace and span IDs for GitHub Actions workflows",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc && ncc build src/index.ts -o dist",
-    "bundle": "npm run format:write && npm run package",
-    "lint:eslint": "npx eslint",
-    "lint": "npm run lint:eslint",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
     "format": "prettier --write '**/*.ts'",
     "format:write": "prettier --write **/*.ts",
-    "format:check": "prettier --check '**/*.ts'"
+    "format:check": "prettier --check '**/*.ts'",
+    "lint:eslint": "npx eslint",
+    "lint": "npm run lint:eslint",
+    "package": "tsc && ncc build src/index.ts -o dist",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "keywords": [
     "github-actions",
@@ -24,16 +23,20 @@
   "author": "Elastic",
   "license": "Apache-2.0",
   "dependencies": {
-    "@actions/core": "^1.11.1"
+    "@actions/core": "^2.0.2"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.11",
-    "@types/node": "^20.11.0",
-    "@vercel/ncc": "^0.38.1",
-    "jest": "^29.7.0",
-    "prettier": "^3.2.4",
-    "ts-jest": "^29.1.1",
-    "typescript": "^5.3.3"
+    "@eslint/js": "^9.39.2",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.0.9",
+    "@vercel/ncc": "^0.38.4",
+    "eslint": "^9.39.2",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jest": "^29.12.1",
+    "jest": "^30.2.0",
+    "prettier": "^3.8.0",
+    "ts-jest": "^29.4.6",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.53.0"
   }
 }
-

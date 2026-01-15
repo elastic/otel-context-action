@@ -1,7 +1,7 @@
 # Elastic OTel Context Action
 
 [![usages](https://img.shields.io/badge/usages-white?logo=githubactions&logoColor=blue)](https://github.com/search?q=elastic/otel-context-action/aws/auth+(path:.github/workflows+OR+path:**/action.yml+OR+path:**/action.yaml)&type=code)
-[![test-aws-auth](https://github.com/elastic/otel-context-action/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/elastic/otel-context-action/actions/workflows/test.yml)
+[![test](https://github.com/elastic/otel-context-action/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/elastic/otel-context-action/actions/workflows/ci.yml)
 
 Generates OpenTelemetry trace and span IDs for GitHub Actions workflows, allowing you to correlate traces from the [OpenTelemetry GitHub Actions receiver](https://github.com/v1v/opentelemetry-github-actions-receiver/blob/main/trace_event_handling.go#L240-L279).
 

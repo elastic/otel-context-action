@@ -85,7 +85,7 @@ jobs:
 
       - name: run otel-cli
         run: |
-          otel-cli exec \
+          $(go env GOPATH)/bin/otel-cli exec \
             --service my-service \
             --name "curl google" \
             curl https://google.com

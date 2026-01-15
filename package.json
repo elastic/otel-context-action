@@ -1,15 +1,19 @@
 {
   "name": "elastic-otel-wrapper-action",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Generates OpenTelemetry trace and span IDs for GitHub Actions workflows",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc && ncc build src/index.ts -o dist",
+    "bundle": "npm run format:write && npm run package",
+    "lint:eslint": "npx eslint",
+    "lint": "npm run lint:eslint",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "format": "prettier --write '**/*.ts'",
-    "format-check": "prettier --check '**/*.ts'"
+    "format:write": "prettier --write **/*.ts",
+    "format:check": "prettier --check '**/*.ts'"
   },
   "keywords": [
     "github-actions",

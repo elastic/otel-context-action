@@ -1,0 +1,19 @@
+name: 'Elastic OTel Wrapper Action'
+description: 'Generates OpenTelemetry trace and span IDs for GitHub Actions workflows'
+author: 'Elastic'
+
+outputs:
+  trace-id:
+    description: 'Generated OpenTelemetry trace ID'
+  span-id:
+    description: 'Generated OpenTelemetry span ID'
+  traceparent:
+    description: 'W3C Trace Context traceparent header'
+
+runs:
+  using: 'node24'
+  main: 'dist/index.js'
+
+branding:
+  icon: 'activity'
+  color: 'purple'

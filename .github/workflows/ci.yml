@@ -55,8 +55,13 @@ jobs:
       - name: Checkout
         id: checkout
         uses: actions/checkout@v6
+
       - name: Run action
         id: otel-context
         uses: ./
-      - name: Dump output
-        run: jq < ${{ steps.otel-context.outputs.traceparent }}
+
+      - name: Assert traceparent is not empty
+        run: test -n "${{ steps.otel-context.outputs.traceparent }}"
+
+      - name: Assert TRACEPARENT env is not empty
+        run: test -n "${{ env.TRACEPARENT }}"

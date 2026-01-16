@@ -26028,7 +26028,7 @@ function run() {
         const runAttempt = process.env.GITHUB_RUN_ATTEMPT || '1';
         const jobName = process.env.GITHUB_JOB || '';
         // TODO: Consider using step name and number if available in future GitHub context
-        const stepName = core.getInput('step-id', { required: false }) || '';
+        const stepName = core.getInput('step-name', { required: false }) || '';
         const stepNumber = '';
         if (!runID || !runAttempt || !jobName) {
             throw new Error('Missing required GitHub context: GITHUB_RUN_ID, GITHUB_RUN_ATTEMPT, GITHUB_JOB');

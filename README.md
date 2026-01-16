@@ -44,6 +44,7 @@ The action automatically detects these from GitHub context:
 | Inputs | Description | Default |
 |--------|-------------| ------- |
 | `output-env` | Whether to export traceparent as environment variables | `true` |
+| `step-name` | Name of the step to set the traceparent. | ` ` |
 
 ## Outputs
 
@@ -85,11 +86,14 @@ jobs:
         run: go install github.com/equinix-labs/otel-cli@latest
 
       - name: otel-context
-        id: otel
+        id: otel-context
         uses: elastic/otel-context-action@v1
         with:
           output-env: false
+          # NOTE: this is the step name that will need the TRACEPARENT.
+          step-name: "run otel-cli"
 
+      # NOTE: this is the step name that matches the step-name input in the otel-context action above.
       - name: run otel-cli
         run: |
           otel-cli exec \
@@ -99,7 +103,7 @@ jobs:
         env:
           OTEL_EXPORTER_OTLP_ENDPOINT: ${{ secrets.ELASTIC_OTEL_ENDPOINT }}
           OTEL_EXPORTER_OTLP_HEADERS: "Authorization=Bearer ${{ secrets.ELASTIC_OTEL_TOKEN }}"
-          TRACEPARENT: ${{ steps.otel.outputs.traceparent }}
+          TRACEPARENT: ${{ steps.otel-context.outputs.traceparent }}
 ```
 
 ## Tasks

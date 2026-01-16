@@ -11,7 +11,7 @@ function run(): void {
     const runAttempt = process.env.GITHUB_RUN_ATTEMPT || '1';
     const jobName = process.env.GITHUB_JOB || '';
     // TODO: Consider using step name and number if available in future GitHub context
-    const stepName = core.getInput('step-id', { required: false }) || '';
+    const stepName = '';
     const stepNumber = '';
 
     if (!runID || !runAttempt || !jobName) {

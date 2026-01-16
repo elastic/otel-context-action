@@ -89,12 +89,8 @@ jobs:
         uses: elastic/otel-context-action@v1
         with:
           output-env: false
-          # NOTE: this is the step id that will need the TRACEPARENT.
-          step-id: "otel-cli"
 
       - name: run otel-cli
-        # NOTE: this is the step id that matches the step-id input above.
-        id: otel-cli
         run: |
           otel-cli exec \
             --service my-service \

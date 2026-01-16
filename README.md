@@ -41,6 +41,12 @@ The action automatically detects these from GitHub context:
 - `GITHUB_RUN_ATTEMPT` - Used for trace ID generation
 - `GITHUB_JOB` - Used for span ID generation
 
+## Inputs
+
+| Inputs | Description | Default |
+|--------|-------------| ------- |
+| `output-env` | Whether to export traceparent as environment variables | `true` |
+
 ## Outputs
 
 | Output | Description |

@@ -56,6 +56,18 @@ jobs:
         id: checkout
         uses: actions/checkout@v6
 
+      - name: Run action No env
+        id: otel-context-no-env
+        uses: ./
+        with:
+          output-env: false
+
+      - name: Assert TRACEPARENT env is empty
+        run: test -z "${TRACEPARENT}"
+
+      - name: Assert traceparent is not empty
+        run: test -n "${{ steps.otel-context-no-env.outputs.traceparent }}"
+
       - name: Run action
         id: otel-context
         uses: ./

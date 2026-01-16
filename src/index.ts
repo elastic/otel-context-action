@@ -3,6 +3,9 @@ import { generateTraceID, generateSpanID, generateTraceparent } from './generate
 
 function run(): void {
   try {
+    // Get inputs
+    const outputEnv = core.getBooleanInput('output-env', { required: false }) !== false;
+
     // Detect parameters from GitHub context environment variables
     const runID = process.env.GITHUB_RUN_ID || '';
     const runAttempt = process.env.GITHUB_RUN_ATTEMPT || '1';
@@ -30,10 +33,12 @@ function run(): void {
     core.setOutput('span-id', spanID);
     core.setOutput('traceparent', traceparent);
 
-    // Set as environment variables
-    core.exportVariable('TRACE_ID', traceID);
-    core.exportVariable('SPAN_ID', spanID);
-    core.exportVariable('TRACEPARENT', traceparent);
+    if (outputEnv) {
+      // Set as environment variables
+      core.exportVariable('TRACE_ID', traceID);
+      core.exportVariable('SPAN_ID', spanID);
+      core.exportVariable('TRACEPARENT', traceparent);
+    }
 
     core.info(`✓ Generated TRACE_ID: ${traceID}`);
     core.info(`✓ Generated SPAN_ID: ${spanID}`);

@@ -7,8 +7,8 @@ inputs:
     description: Whether to export traceparent as environment variables.
     required: false
     default: true
-  step-id:
-    description: Name of the step to set environment variables for.
+  step-name:
+    description: Name of the step to set the traceparent.
     required: false
 
 outputs:

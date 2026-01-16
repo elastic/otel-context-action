@@ -92,15 +92,14 @@ jobs:
         id: otel-context
         uses: ./
         with:
-          # NOTE: this is the step id that will need the TRACEPARENT.
-          step-id: "otel-cli"
+          # NOTE: this is the step name that will need the TRACEPARENT.
+          step-name: "run otel-cli"
 
       - name: install otel-cli
         run: go install github.com/equinix-labs/otel-cli@latest
 
+      # NOTE: this is the step name that matches the step-name input in the otel-context action above.
       - name: run otel-cli
-        # NOTE: this is the step id that matches the step-id input above.
-        id: otel-cli
         run: |
           $(go env GOPATH)/bin/otel-cli exec \
             --service my-service \

@@ -8,6 +8,3 @@ describe('Action index module', () => {
     expect(true).toBe(true);
   });
 });
-
-
-

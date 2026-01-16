@@ -1,6 +1,12 @@
-name: 'Elastic OTel Wrapper Action'
-description: 'Generates OpenTelemetry trace and span IDs for GitHub Actions workflows'
+name: 'Elastic OTel Context Action'
+description: 'Generates OpenTelemetry traceparent context for GitHub Actions workflows'
 author: 'Elastic'
+
+inputs:
+  output-env:
+    description: Whether to export traceparent as environment variables.
+    required: false
+    default: true
 
 outputs:
   trace-id:

@@ -26021,6 +26021,8 @@ const core = __importStar(__nccwpck_require__(7484));
 const generate_1 = __nccwpck_require__(3516);
 function run() {
     try {
+        // Get inputs
+        const outputEnv = core.getBooleanInput('output-env', { required: false }) !== false;
         // Detect parameters from GitHub context environment variables
         const runID = process.env.GITHUB_RUN_ID || '';
         const runAttempt = process.env.GITHUB_RUN_ATTEMPT || '1';
@@ -26039,10 +26041,12 @@ function run() {
         core.setOutput('trace-id', traceID);
         core.setOutput('span-id', spanID);
         core.setOutput('traceparent', traceparent);
-        // Set as environment variables
-        core.exportVariable('TRACE_ID', traceID);
-        core.exportVariable('SPAN_ID', spanID);
-        core.exportVariable('TRACEPARENT', traceparent);
+        if (outputEnv) {
+            // Set as environment variables
+            core.exportVariable('TRACE_ID', traceID);
+            core.exportVariable('SPAN_ID', spanID);
+            core.exportVariable('TRACEPARENT', traceparent);
+        }
         core.info(`✓ Generated TRACE_ID: ${traceID}`);
         core.info(`✓ Generated SPAN_ID: ${spanID}`);
         core.info(`✓ Generated TRACEPARENT: ${traceparent}`);

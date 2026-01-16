@@ -3,9 +3,7 @@
 [![usages](https://img.shields.io/badge/usages-white?logo=githubactions&logoColor=blue)](https://github.com/search?q=elastic%2Fotel-context-action+%28path%3A.github%2Fworkflows+OR+path%3A**%2Faction.yml+OR+path%3A**%2Faction.yaml%29&type=code)
 [![test](https://github.com/elastic/otel-context-action/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/elastic/otel-context-action/actions/workflows/ci.yml)
 
-Generates OpenTelemetry trace and span IDs for GitHub Actions workflows, allowing you to correlate traces from the [OpenTelemetry GitHub Actions receiver](https://github.com/v1v/opentelemetry-github-actions-receiver/blob/main/trace_event_handling.go#L240-L279).
-
-Automatically detects GitHub context and sets `TRACE_ID`, `SPAN_ID` and `TRACEPARENT` environment variables in your workflow.
+Generates OpenTelemetry trace and span IDs for GitHub Actions workflows, allowing you to correlate traces from different services.
 
 ## Usage
 
@@ -69,7 +67,7 @@ These are automatically set for use in subsequent steps:
 
 **Span ID**: SHA-256 hash of `{runID}{runAttempt}{jobName}{stepName}{stepNumber?}`, characters 16-32
 
-Based on the [OTel GitHub Actions receiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/receiver/githubactionsreceiver/trace_event_handling.go) implementation.
+Based on the [OTel GitHub Actions receiver](https://github.com/v1v/opentelemetry-github-actions-receiver/blob/main/trace_event_handling.go#L240-L279) implementation.
 
 ## Examples
 
@@ -89,6 +87,8 @@ jobs:
       - name: otel-context
         id: otel
         uses: elastic/otel-context-action@v1
+        with:
+          output-env: false
 
       - name: run otel-cli
         run: |
@@ -99,7 +99,7 @@ jobs:
         env:
           OTEL_EXPORTER_OTLP_ENDPOINT: ${{ secrets.ELASTIC_OTEL_ENDPOINT }}
           OTEL_EXPORTER_OTLP_HEADERS: "Authorization=Bearer ${{ secrets.ELASTIC_OTEL_TOKEN }}"
-          TRACEPARENT: ${{ steps.otel.outputs.traceparent }} # TRACEPARENT env variable is already
+          TRACEPARENT: ${{ steps.otel.outputs.traceparent }}
 ```
 
 ## Tasks
